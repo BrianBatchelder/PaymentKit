@@ -59,11 +59,15 @@
             cardExpiryField, cardCVCField,
             placeholderView, delegate;
 
-- (id)initWithFrame:(CGRect)frame
+- (id)initWithFrame:(CGRect)frame {
+    return [self initWithFrame:frame withTextFieldBackground:YES];
+}
+
+- (id)initWithFrame:(CGRect)frame withTextFieldBackground:(BOOL)textFieldBackground
 {
     self = [super initWithFrame:frame];
     if (self) {
-        [self setup];
+        [self setup:textFieldBackground];
     }
     return self;
 }
@@ -74,7 +78,11 @@
     [self setup];
 }
 
-- (void)setup
+- (void)setup {
+    [self setup:YES];
+}
+
+- (void)setup:(BOOL)textFieldBackground
 {
     isInitialState = YES;
     isValidState   = NO;
@@ -82,10 +90,12 @@
     self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, 290, 46);
     self.backgroundColor = [UIColor clearColor];
     
-    UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:self.bounds];
-    backgroundImageView.image = [[UIImage imageNamed:@"textfield"]
-                                 resizableImageWithCapInsets:UIEdgeInsetsMake(0, 8, 0, 8)];
-    [self addSubview:backgroundImageView];
+    if (textFieldBackground) {
+        UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:self.bounds];
+        backgroundImageView.image = [[UIImage imageNamed:@"textfield"]
+                                     resizableImageWithCapInsets:UIEdgeInsetsMake(0, 8, 0, 8)];
+        [self addSubview:backgroundImageView];
+    }
     
     self.innerView = [[UIView alloc] initWithFrame:CGRectMake(40, 12, self.frame.size.width - 40, 20)];
     self.innerView.clipsToBounds = YES;

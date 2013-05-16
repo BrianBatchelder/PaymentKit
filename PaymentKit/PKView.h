@@ -23,6 +23,8 @@
 
 @interface PKView : UIView
 
+- (id)initWithFrame:(CGRect)frame withTextFieldBackground:(BOOL)textFieldBackground;
+
 - (BOOL)isValid;
 
 @property (nonatomic, readonly) UIView *opaqueOverGradientView;
